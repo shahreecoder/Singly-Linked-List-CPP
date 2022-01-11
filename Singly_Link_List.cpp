@@ -1,11 +1,94 @@
 #include<iostream>
 using namespace std;
+class date{
+	private:
+		int day;
+		int month;
+		int year;
+	public:
+		date(){
+			day=0;
+			month=0;
+			year=0;
+		}
+		date(int d, int m, int y){
+			day=d;
+			month=m;
+			year=y;
+		}
+		void setmonth(int m){
+			month=m;
+		}
+		int getmonth(){
+			return month;
+		}
+		void setday(int d){
+			day=d;
+		}
+		int getday(){
+			return day;
+		}
+		void setyear(int y){
+			year=y;
+		}
+		int getyear(){
+			return year;
+		}
+		void pirntdate(){
+			cout<<day<<" - "<<month<<" - "<<year<<endl;
+		}
+};
+//id name stdclass
+class student{
+	private:
+		int id; 
+		string name;
+		string cls;
+		date dob;
+	public:
+		void setid(int n){
+			id=n;
+		}
+		int getid(){
+			return id;
+		}
+		void setname(string n){
+			name=n;
+		}
+		string getname(){
+			return name;
+		}
+		void setcls(string n){
+			cls=n;
+		}
+		string getcls(){
+			return cls;
+		}
+		void setdob(int d, int m, int y){
+			dob.setday(d);
+			dob.setmonth(m);
+			dob.setyear(y);
+		}
+	void printstd(){
+		cout<<"------------------------"<<endl;
+		cout<<"Name is"<<name<<endl;
+		cout<<"ID is"<<id<<endl;
+		cout<<"Clas is"<<cls<<endl;
+	cout<<"Month of Birth Day is"<<dob.getmonth();
+		cout<<"------------------------"<<endl;
+	}
+		
+};
+
+
 class node{
 	public:
-		int data;
+		student data;
 		node *next;
 		node(){
-			data=0;
+			data.setid(0);
+			data.setname("a");
+			data.setcls("b");
 			next=NULL;
 		}
 };
@@ -15,9 +98,12 @@ class linklist{
 		linklist(){
 			head=NULL;
 		}
-	void insertFirst(int val){
+	void insertFirst(int id, string name, string cls, int d, int m, int y){
 		node *newnode=new node();
-		newnode->data=val;
+		newnode->data.setid(id);
+		newnode->data.setname(name);
+		newnode->data.setcls(cls);
+		newnode->data.setdob(d,m,y);
 		if(head==NULL){
 			head=newnode;
 			cout<<"Insert scuccessfull"<<endl;
@@ -27,9 +113,11 @@ class linklist{
 		}
 		
 	}	
-	void insertLast(int val){
+	void insertLast(int id, string name, string cls){
 		node *newnode=new node();
-		newnode->data=val;
+		newnode->data.setid(id);
+		newnode->data.setname(name);
+		newnode->data.setcls(cls);
 		if(head==NULL){
 			head=newnode;
 			cout<<"Insert "<<endl;
@@ -44,111 +132,49 @@ class linklist{
 		}
 	}
 	
-	void insertAtspecfic(int old,int val){
-		node *newnode=new node();
-		newnode->data=val;
-		if(head==NULL){
-			head=newnode;
-			cout<<"Data inserted"<<endl;
-		}else{
-			node *temp=head;
-			node *spec=NULL;
-			while(temp->next!=NULL){
-				if(temp->next->data==old){
-						spec=temp->next;
-						temp->next=spec->next;
-						break;
-				}
-			}
-			
-		}
-	}
-	void search(int num){
+void search(int id){
 		if(head!=NULL){
 			node *temp=head;
 			while(temp!=NULL){
-				if(temp->data==num){
-					cout<<"Number is Found"<<endl;
+				if(temp->data.getid()==id){
+					temp->data.printstd();
 					return;
 				}
 				temp=temp->next;
 			}
-			cout<<"Number is Not Found"<<endl;
+			cout<<"Student is Not Found"<<endl;
 		}else{
 			cout<<"List is empty"<<endl;
 		}
 	}
-	void update(int old,int newnum){
+
+	void update(int id,string name,string cls){
 		if(head!=NULL){
 			node *temp=head;
 			while(temp!=NULL){
-				if(temp->data==old){
-					temp->data=newnum;
-					cout<<"Number is Update"<<endl;
+				if(temp->data.getid()==id){
+					temp->data.setname(name);
+					temp->data.setcls(cls);
+					cout<<"data is Update"<<endl;
 					return;
 				}
 				temp=temp->next;
 			}
-			cout<<"Old Number is not found"<<endl;
+			cout<<"Student is not found"<<endl;
 		}else{
 			cout<<"List is empty"<<endl;
 		}
 	}
-	
-	void display(){
-		int count=0;
-		if(head!=NULL){
-			node * temp=head;
-			while(temp!=NULL){
-				//cout<<temp->data<<" ";
-				count++;
-				temp=temp->next;	
-		}
-		cout<<"Total Number of Nodes is"<<count<<endl;
-		}else{
-			cout<<"List is empty"<<endl;
-		}
-	}
-	void printprime(){
-		
-		if(head!=NULL){
-			node *temp=head;
-			int a=0;
-			int index=0;
-			int c=0;
-			while(temp!=NULL){
-				a=temp->data;
-				index++;
-				for(int i=2;i<=a;i++){
-					if(a%i==0){
-						//cout<<"This number is Prime"<<a <<" and it sotore on node: "<<index<<endl;
-						//break;
-						c++;	
-					}
-				}
-				if(c==1){
-				cout<<"This number is Prime"<<a <<" and it sotore on node: "<<index<<endl;
-	
-				}
-				a=0;
-				c=0;
-				temp=temp->next;
-			}
-		}else{
-			cout<<"List is empty"<<endl;
-		}
-	}
-	
-	void dlt(int num){
+void dlt(int id){
 		node *pre=NULL;
 		if(head!=NULL){
-			if(head->data==num){
+			if(head->data.getid()==id){
 				pre=head;
 				head=head->next;
 			}else{
 				node *temp=head;
 				while(temp->next!=NULL){
-					if(temp->next->data==num){
+					if(temp->next->data.getid()==id){
 						pre=temp->next;
 						temp->next=pre->next;
 						break;
@@ -163,21 +189,63 @@ class linklist{
 			cout<<"List is empty"<<endl;
 		}
 	}	
+
+
+	void display(){
+		int count=0;
+		if(head!=NULL){
+			node * temp=head;
+			while(temp!=NULL){
+				temp->data.printstd();
+				count++;
+				temp=temp->next;	
+		}
+		cout<<"Total Number of Nodes is"<<count<<endl;
+		}else{
+			cout<<"List is empty"<<endl;
+		}
+	}
+	
+//	void insertatmidel(int data,int pos){
+//		node * newnode=new node();
+//		newnode->data=data;
+//		if(head==NULL){
+//			head=newnode;
+//		}else{
+//			node *temp=head;
+//			int count=0;
+//			while(temp!=NULL){
+//				count++;
+//				if(count==pos){
+//					newnode->next=temp->next;
+//					temp->next=newnode;
+//				}
+//			}
+//		}
+//	}
+	
+	
+	
+	
+	
 };
 int main(){
  linklist obj;
- obj.insertFirst(23);
- obj.insertFirst(33);
- obj.insertFirst(7);
- obj.insertLast(57);
- obj.insertLast(97);
- obj.insertLast(50);
- //obj.search(99);
- //obj.display();
- //obj.update(33,89);
- //obj.update(23,100);
- //obj.display();
- //obj.dlt(57);
- //obj.display();
- obj.printprime();
+ obj.insertFirst(1,"Shahroz","MS",5,11,1998);
+ obj.insertFirst(2,"Sabahat","BSCS",12,01,2002);
+ //obj.insertLast(3,"ABC","MCS");
+ obj.display();
+ int id;
+ cout<<"Enter id"<<endl;
+ cin>>id;
+ obj.search(id);
+ 
+// cout<<"Enter id that you want to update"<<endl;
+// cin>>id;
+// obj.update(id,"taiba","10th");
+// obj.display();
+ 
+ obj.dlt(2);
+ obj.display();
+ 
 }
